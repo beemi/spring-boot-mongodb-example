@@ -3,7 +3,7 @@ package spring.boot.mongodb.example.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -12,7 +12,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Student")
 public class Student {
 
-    @Id private int id;
+    @Id
+    private int id;
     private String name;
     private String email;
     private String phone;

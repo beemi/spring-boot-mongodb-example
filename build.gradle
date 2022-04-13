@@ -20,7 +20,7 @@ dependencies {
 
     // swagger
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.6'
-
+    implementation group: 'io.swagger', name: 'swagger-annotations', version: '2.0.0-rc2'
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
