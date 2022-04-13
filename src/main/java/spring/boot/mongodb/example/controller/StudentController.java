@@ -38,7 +38,7 @@ public final class StudentController {
 
         val existingStudent = studentRepository.findById(student.getId());
         if (existingStudent.isPresent()) {
-            log.error("Student already exists");
+            log.error("Student already exists {}", student.getId());
             return ResponseEntity.badRequest().headers(new HttpHeaders()).body("{\"message\": \"Student already exists\"}");
         }
 
