@@ -1,5 +1,8 @@
 package spring.boot.mongodb.example.controller;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.prometheus.client.CollectorRegistry;
+import io.prometheus.client.Counter;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -15,8 +18,18 @@ import spring.boot.mongodb.example.repository.StudentRepository;
 @RestController
 public final class StudentController {
 
+    private static final String METRICS_NAME_SPACE = "spring_boot_mongodb_example";
+    CollectorRegistry registry = CollectorRegistry.defaultRegistry;
+
     @Autowired
     private StudentRepository studentRepository;
+
+    private final Counter createStudentCounter = Counter.build()
+            .namespace(METRICS_NAME_SPACE)
+            .name("create_student_counter")
+            .help("Counter for create student")
+            .labelNames("status")
+            .register(registry);
 
     @Operation(summary = "Create a student", description = "Create a student record", tags = {"student"}, responses = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Created",
@@ -39,6 +52,7 @@ public final class StudentController {
         val existingStudent = studentRepository.findById(student.getId());
         if (existingStudent.isPresent()) {
             log.error("Student already exists {}", student.getId());
+            createStudentCounter.labels("student already exist error").inc();
             return ResponseEntity.badRequest().headers(new HttpHeaders()).body("{\"message\": \"Student already exists\"}");
         }
 
@@ -47,6 +61,9 @@ public final class StudentController {
         } catch (Exception e) {
             log.error("Error while saving student", e);
         }
+
+        createStudentCounter.labels("new student record added").inc();
+
         return new ResponseEntity<>(student, new HttpHeaders(), HttpStatus.CREATED);
     }
 
@@ -95,6 +112,7 @@ public final class StudentController {
         }
         return ResponseEntity.ok().headers(new HttpHeaders()).body(students);
     }
+
     @Operation(summary = "Get student by id", description = "Get student record by Id", tags = {"student"}, responses = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "OK"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad Request"),
@@ -110,6 +128,7 @@ public final class StudentController {
             return ResponseEntity.badRequest().headers(new HttpHeaders()).body("{\"message\": \"Error while getting student\"}");
         }
     }
+
     @Operation(summary = "Delete a student", description = "Delete a student record", tags = {"student"}, responses = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "OK"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad Request"),

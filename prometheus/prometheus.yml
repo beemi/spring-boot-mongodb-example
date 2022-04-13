@@ -1,0 +1,37 @@
+global:
+  scrape_interval: 10s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'docker-host-alpha'
+
+rule_files:
+  - "*.rule.yaml"
+  - "alerts/*.yaml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets: [ 'localhost:9090' ]
+
+  - job_name: 'spring-actuator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    scheme: http
+    static_configs:
+      - targets: [ 'host.docker.internal:8080' ]
+
+  - job_name: 'node_exporter'
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets: [ 'host.docker.internal:9100' ]
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets:
+            - 'alertmanager:9093'
