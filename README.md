@@ -18,6 +18,10 @@ docker-compose up -d
 
 ![Alt text](docs/img_5.png)
 
+Connect MongoDB using [Compass The GUI for MongoDB](https://www.mongodb.com/products/compass):
+
+![Alt text](docs/img_6.png)
+
 Stop the service with the following command:
 
 ```shell
