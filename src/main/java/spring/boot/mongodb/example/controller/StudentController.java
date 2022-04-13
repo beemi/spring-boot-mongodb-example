@@ -1,6 +1,5 @@
 package spring.boot.mongodb.example.controller;
 
-import io.swagger.v3.oas.annotations.OpenAPI30;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -20,7 +19,8 @@ public final class StudentController {
     private StudentRepository studentRepository;
 
     @Operation(summary = "Create a student", description = "Create a student record", tags = {"student"}, responses = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Created"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Created",
+                    content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Student.class))),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad Request"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")})
     @PostMapping("/student")
@@ -111,7 +111,7 @@ public final class StudentController {
         }
     }
     @Operation(summary = "Delete a student", description = "Delete a student record", tags = {"student"}, responses = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Created"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "OK"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad Request"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error")})
     @DeleteMapping("/student/{id}")
