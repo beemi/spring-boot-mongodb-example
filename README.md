@@ -13,6 +13,8 @@ Start MongoDB, Prometheus, Grafana, and the service with the following commands:
 docker-compose up -d
 ```
 
+![Alt text](docs/img_5.png)
+
 Stop the service with the following command:
 
 ```shell
