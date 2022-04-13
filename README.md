@@ -23,5 +23,7 @@ http://localhost:8080/api-docs/
 
 http://localhost:8080/swagger-ui/index.html
 
+![Alt text](docs/img.png)
+
 ## Contacts
 Owner: [beemi.raja@gmail.com](beemi.raja@gmail.com)
