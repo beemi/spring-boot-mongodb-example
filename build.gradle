@@ -35,3 +35,7 @@ testing {
         }
     }
 }
+
+jar{
+    enabled = false
+}
