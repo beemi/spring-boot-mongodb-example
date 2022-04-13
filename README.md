@@ -1,4 +1,7 @@
 # spring-boot-mongodb-example
+[![Docker Image CI](https://github.com/beemi/spring-boot-mongodb-example/actions/workflows/docker-image.yml/badge.svg?branch=main)](https://github.com/beemi/spring-boot-mongodb-example/actions/workflows/docker-image.yml)
+
+
 Spring boot service with mongoDB CRUD example
 
 
