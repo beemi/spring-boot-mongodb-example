@@ -33,5 +33,12 @@ http://localhost:8080/swagger-ui/index.html
 
 ![Alt text](docs/img.png)
 
+## Prometheus
+
+http://localhost:8080/actuator/prometheus
+
+![Alt text](docs/img_1.png)
+
+
 ## Contacts
 Owner: [beemi.raja@gmail.com](beemi.raja@gmail.com)
