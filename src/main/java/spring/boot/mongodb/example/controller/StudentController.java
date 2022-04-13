@@ -34,13 +34,20 @@ public class StudentController {
             return ResponseEntity.badRequest().headers(responseHeaders).body("{\"message\": \"Email is required\"}");
         }
 
+        val existingStudent = studentRepository.findById(student.getId());
+        if (existingStudent.isPresent()) {
+            log.error("Student already exists");
+            return ResponseEntity.badRequest().headers(responseHeaders).body("{\"message\": \"Student already exists\"}");
+        }
+
         try {
             studentRepository.save(student);
         } catch (Exception e) {
             log.error("Error while saving student", e);
         }
-        return new ResponseEntity<>(student, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(student, new HttpHeaders(), HttpStatus.CREATED);
     }
+
 
     @GetMapping("/students")
     public ResponseEntity<Object> getStudents() {
@@ -57,17 +64,19 @@ public class StudentController {
     }
 
     @GetMapping("/student/{id}")
-    public ResponseEntity<Object> getStudent(@PathVariable int id) {
+    public ResponseEntity<Object> getStudent(@PathVariable("id") int id) {
+
         val responseHeaders = new HttpHeaders();
         responseHeaders.set("Content-Type", "application/json");
         responseHeaders.set("Access-Control-Allow-Origin", "*");
 
-        val student = studentRepository.findById(id);
-        if (student.isEmpty()) {
-            log.error("No student found");
-            return ResponseEntity.badRequest().headers(responseHeaders).body("{\"message\": \"No student found\"}");
+        try {
+            val student = studentRepository.findById(id);
+            return student.<ResponseEntity<Object>>map(value -> new ResponseEntity<>(value, new HttpHeaders(), HttpStatus.OK)).orElseGet(() -> ResponseEntity.badRequest().headers(responseHeaders).body("{\"message\": \"Student not found\"}"));
+        } catch (Exception e) {
+            log.error("Error while getting student", e);
+            return ResponseEntity.badRequest().headers(responseHeaders).body("{\"message\": \"Error while getting student\"}");
         }
-        return ResponseEntity.ok().headers(responseHeaders).body(student);
     }
 
     @DeleteMapping("/student")
