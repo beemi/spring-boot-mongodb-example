@@ -1,4 +1,4 @@
-FROM --platform=linux/x86_64 amazoncorretto:11-alpine-jdk
+FROM --platform=linux/x86_64 amazoncorretto:21-alpine-jdk
 
 RUN apk update \
     && apk upgrade \
