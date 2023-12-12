@@ -22,7 +22,7 @@ dependencies {
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.7'
 
     // monitoring
-    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.8.4'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.12.1'
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
