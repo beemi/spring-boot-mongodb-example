@@ -1,44 +1,61 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.6'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springdoc.openapi-gradle-plugin' version "1.8.0"
 }
+
+group = 'com.jaitech.ltd'
+version = '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
 dependencies {
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // database
     runtimeOnly 'com.h2database:h2'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     // spring boot mongodb
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.6.6'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     // swagger
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.7'
 
     // monitoring
-    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.8.4'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
 
+    // spring boot admin
+    implementation 'de.codecentric:spring-boot-admin-starter-server:3.0.0-M5'
+
+    // lombok - Check for the latest version
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
-
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+
+    // testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-testing {
-    suites {
-        test {
-            useJUnitJupiter('5.8.1')
-        }
-    }
+tasks.named('test') {
+    useJUnitPlatform()
 }
 
-jar{
+jar {
     enabled = false
 }

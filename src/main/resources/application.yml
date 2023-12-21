@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: student-management-system
+  devtools:
+    restart:
+      enabled: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: student-management
+
+server:
+  port: 8090
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    jmx:
+      exposure:
+        include: health,info,env,beans
+
+springdoc:
+  use-management-port: true
+  swagger-ui:
+    path: /swagger-ui.html

@@ -1,35 +1,42 @@
 package spring.boot.mongodb.example.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Document(collection = "Student")
-public class Student {
+public class Student implements Serializable {
 
     @Id
-    @Parameter(description = "Student id")
-    private int id;
-    @Parameter(description = "Student name")
+    @Parameter(hidden = true, description = "MongoDB generated id")
+    @JsonIgnore
+    private ObjectId mongoId;
+
+    @Indexed(background = true)
+    @Parameter(hidden = true)
+    private String studentId;
+
     private String name;
-    @Parameter(description = "Student email")
     private String email;
-    @Parameter(description = "Student phone")
     private String phone;
-    @Parameter(description = "Student address")
     private String address;
-    @Parameter(description = "Student city")
     private String city;
-    @Parameter(description = "Student state")
     private String state;
-    @Parameter(description = "Student zip")
     private String zip;
-    @Parameter(description = "Student country")
     private String country;
+    private String createdAt;
+    private String updatedAt;
 }

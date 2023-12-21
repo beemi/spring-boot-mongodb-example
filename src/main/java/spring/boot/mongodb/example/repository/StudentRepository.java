@@ -5,5 +5,11 @@ import org.springframework.stereotype.Repository;
 import spring.boot.mongodb.example.model.Student;
 
 @Repository
-public interface StudentRepository extends MongoRepository<Student, Integer> {
+public interface StudentRepository extends MongoRepository<Student, String> {
+
+    Student findByStudentId(final String studentId);
+
+    Student findByEmail(final String email);
+
+    void deleteByStudentId(final String studentId);
 }

@@ -1,65 +1,18 @@
-version: "3"
+version: "3.9"
 
 services:
-  mongodb:
-    image: mongo
-    ports:
-      - '27017:27017'
-    networks:
-      local:
-        ipv4_address: 10.10.0.8
-
-  prometheus:
-    image: prom/prometheus
-    container_name: prometheus
-    volumes:
-      - ./prometheus:/etc/prometheus
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
-      - '--storage.tsdb.retention.time=200h'
-      - '--web.enable-lifecycle'
-    restart: unless-stopped
-    expose:
-      - 9090
-    ports:
-      - "9090:9090"
-    networks:
-      - monitoring
-    labels:
-      org.label-schema.group: "monitoring"
-
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
+  mongo:
+    container_name: mongo-student
+    image: mongo:latest
     restart: always
+    environment:
+      MONDODB_DATABASE: student-management
+      MONGO_INITDB_DATABASE: student-management
     ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
-    networks:
-      - monitoring
+      - "27017:27017"
     volumes:
-      - grafana-volume:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
-    labels:
-      org.label-schema.group: "monitoring"
+      - mongo-data:/data/db
 
 volumes:
-    grafana-volume: { }
-    prometheus_data: { }
-
-networks:
-  monitoring:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.11.0.0/25
-  local:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.10.0.0/24
+  mongo-data:
+    driver: local
