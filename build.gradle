@@ -41,10 +41,10 @@ dependencies {
     implementation 'de.codecentric:spring-boot-admin-starter-server:3.0.0-M5'
 
     // lombok - Check for the latest version
-    compileOnly 'org.projectlombok:lombok:1.18.22'
-    annotationProcessor 'org.projectlombok:lombok:1.18.22'
-    testCompileOnly 'org.projectlombok:lombok:1.18.22'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    testCompileOnly 'org.projectlombok:lombok:1.18.34'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
 
     implementation 'org.apache.commons:commons-lang3:3.14.0'
 
