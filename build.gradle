@@ -38,7 +38,7 @@ dependencies {
     implementation 'io.micrometer:micrometer-registry-prometheus'
 
     // spring boot admin
-    implementation 'de.codecentric:spring-boot-admin-starter-server:3.0.0-M5'
+    implementation 'de.codecentric:spring-boot-admin-starter-server:3.3.4'
 
     // lombok - Check for the latest version
     compileOnly 'org.projectlombok:lombok:1.18.22'
